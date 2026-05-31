@@ -1,32 +1,34 @@
 @echo off
-set OriginalDirectory=%~dp0
-echo 1 - Install, 2 - Update
+set OriginalDirectory=%appdata%
+cd %OriginalDirectory%
+echo 1 - Install, 2 - Update, 3 - Uninstall
 set /p opcja=""
 
-@REM Instalowanie potrzebnych składników
-winget install --id Git.Git -e --source winget --accept-source-agreements --accept-package-agreements
 
 if /i "%opcja%"=="1" goto Install
 if /i "%opcja%"=="2" goto Update
-
-
-:Update
-echo Wybrano update
-mkdir UpdateFiles
-cd UpdateFiles
-git clone https://github.com/Zzychu/ZSMP4.git .
-goto end
+if /i "%opcja%"=="3" goto Uninstall
 
 :Install
 echo Wybrano install
 mkdir InstallFiles
 cd InstallFiles
-git clone https://github.com/Zzychu/ZSMP4.git .
 
 @REM Java
 curl -L https://download.oracle.com/java/21/archive/jdk-21.0.10_windows-x64_bin.zip --output zip.zip
 tar -xf zip.zip
 ren jdk-21.0.10 java
+
+
+@REM Git stuff
+mkdir git
+cd git
+curl -L https://github.com/git-for-windows/git/releases/download/v2.54.0.windows.1/MinGit-2.54.0-64-bit.zip --output git.zip
+tar -xf git.zip
+cd ..
+"git/cmd/git.exe" clone https://github.com/Zzychu/ZSMP4.git
+xcopy /S /Y /F %OriginalDirectory%\InstallFiles\ZSMP4 ./
+
 
 @REM DODAWANIE WERSJI NEOFORGE CAŁA LOGIKA
 cd %APPDATA%
@@ -61,6 +63,29 @@ xcopy /S /Y /F %OriginalDirectory%\InstallFiles\java java\
 xcopy /S /Y /F %OriginalDirectory%\InstallFiles\config config\
 xcopy /S /Y /F %OriginalDirectory%\InstallFiles\options.txt ./
 xcopy /S /Y /F %OriginalDirectory%\InstallFiles\servers.dat ./
+goto end
+
+:Update
+echo Wybrano update
+mkdir UpdateFiles
+cd UpdateFiles
+
+
+@REM Git stuff
+mkdir git
+cd git
+curl -L https://github.com/git-for-windows/git/releases/download/v2.54.0.windows.1/MinGit-2.54.0-64-bit.zip --output git.zip
+tar -xf git.zip
+cd ..
+"git/cmd/git.exe" clone https://github.com/Zzychu/ZSMP4.git
+xcopy /S /Y /F %OriginalDirectory%\UpdateFiles\ZSMP4 ./
+
+
+goto end
+
+:Uninstall
+powershell -NoProfile -ExecutionPolicy remotesigned -Command "$path = \"$env:APPDATA\.minecraft\launcher_profiles.json\"; $json = Get-Content $path | ConvertFrom-Json; $json.profiles.PSObject.Properties.Remove('ZSMP4'); $json | ConvertTo-Json -Depth 100 | Set-Content $path"
+rmdir /S /Q %appdata%\.minecraft\ZSMP4
 goto end
 
 :end
