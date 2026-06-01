@@ -19,4 +19,4 @@ $json2.profiles | Add-Member -MemberType NoteProperty -Name "ZSMP4" -Value $newP
 
 
 
-$json | ConvertTo-Json -Depth 100 | Set-Content $path
+$json2 | ConvertTo-Json -Depth 100 | Set-Content $path2
