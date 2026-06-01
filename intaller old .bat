@@ -35,15 +35,24 @@ xcopy /S /Y /F %OriginalDirectory%\InstallFiles\ZSMP4 ./
 
 @REM DODAWANIE WERSJI NEOFORGE CAŁA LOGIKA
 cd %APPDATA%
-cd .minecraft
-copy launcher_profiles.json launcher_profiles2.json
+ren .minecraft .minecraft_backup
+mkdir .minecraft
+cd .minecraft_backup
+xcopy /S /Y /F launcher_profiles.json ..\.minecraft
 cd %OriginalDirectory%/InstallFiles
 "java/bin/java.exe" -jar neoforge-21.1.233-installer.jar --installClient
+cd %APPDATA%
+cd .minecraft
+ren launcher_profiles.json launcher_profiles2.json
+cd %APPDATA%
+xcopy /S /Y /F .minecraft .minecraft_backup
+rmdir /S /Q .minecraft
+ren .minecraft_backup .minecraft
 cd %OriginalDirectory%/InstallFiles
 Powershell.exe -executionpolicy remotesigned -File ./VersionArgumentsChange.ps1
-cd %APPDATA%/.minecraft
-del launcher_profiles.json
-ren launcher_profiles2.json launcher_profiles.json
+cd %APPDATA%
+cd .minecraft
+del launcher_profiles2.json
 
 @REM PRZENOSZENIE MODÓW I CONFIGÓW I INNYCH
 cd %APPDATA%/.minecraft
