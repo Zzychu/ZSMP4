@@ -1,11 +1,15 @@
 @echo off
 set OriginalDirectory=%appdata%
 cd %OriginalDirectory%
+rmdir /S /Q UpdateFiles
+rmdir /S /Q InstallFiles
+rmdir /S /Q tempZSMPInstaller
 mkdir tempZSMPInstaller
 
 :info
 cls
 echo ========================================================================================================================
+echo Witam w installatorze ZychuSMP4 sklejonego tasma klejem i dwunastoma butelkami kaucyjnymi
 echo 1 - Install [ Instaluje paczke ZSMP4 na komputerze ] 
 echo 2 - Update [ Pobiera aktualizacje modow ]
 echo 3 - Uninstall [ Odinstalowywuje paczke i resetuje ustawienia ]
@@ -68,6 +72,15 @@ xcopy /S /Y /F %OriginalDirectory%\InstallFiles\java java\
 xcopy /S /Y /F %OriginalDirectory%\InstallFiles\config config\
 xcopy /S /Y /F %OriginalDirectory%\InstallFiles\options.txt ./
 xcopy /S /Y /F %OriginalDirectory%\InstallFiles\servers.dat ./
+cls
+echo ========================================================================================================================
+echo Przygotowalem wczesniej wygenerowane chunki do moda voxy
+echo Pozwalaja one widzec dalej niz pozwala serwer i ogolnie powiekszaja dystans widzenia.
+echo Pobranie takich chunkow wymaga ~10GB wolnych na komputerze a po instalacji beda one wazyc ~5GB wiec sa one opcjonalne.
+echo ========================================================================================================================
+set VoxyOption="T"
+set /p VoxyOption="Czy chcesz pobrac wygenerowane wczesniej chunki? [ 'T' - TAK | 'N' - NIE ]: "
+if /i "%VoxyOption%"=="N" goto end
 curl --ssl-no-revoke -L http://zychuhost.ddns.net/.voxy.zip --output voxy.zip
 tar -xf voxy.zip
 del voxy.zip
