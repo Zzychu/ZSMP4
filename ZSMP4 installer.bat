@@ -84,25 +84,6 @@ if /i "%VoxyOption%"=="N" goto end
 curl --ssl-no-revoke -L http://zychuhost.ddns.net/.voxy.zip --output voxy.zip
 tar -xf voxy.zip
 del voxy.zip
-cd .voxy/saves/zychuhost.ddns.net/905087f11b320fc233b3948d9ee8f55a/storage
-curl --ssl-no-revoke -L http://zychuhost.ddns.net/part1.zip --output part1.zip
-tar -xf part1.zip
-del part1.zip
-curl --ssl-no-revoke -L http://zychuhost.ddns.net/part2.zip --output part2.zip
-tar -xf part2.zip
-del part2.zip
-curl --ssl-no-revoke -L http://zychuhost.ddns.net/part3.zip --output part3.zip
-tar -xf part3.zip
-del part3.zip
-curl --ssl-no-revoke -L http://zychuhost.ddns.net/part1.zip --output part4.zip
-tar -xf part4.zip
-del part4.zip
-curl --ssl-no-revoke -L http://zychuhost.ddns.net/part5.zip --output part5.zip
-tar -xf part5.zip
-del part5.zip
-curl --ssl-no-revoke -L http://zychuhost.ddns.net/part6.zip --output part6.zip
-tar -xf part6.zip
-del part6.zip
 goto end
 
 :Update
