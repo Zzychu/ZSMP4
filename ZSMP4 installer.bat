@@ -9,7 +9,7 @@ mkdir tempZSMPInstaller
 :info
 cls
 echo ========================================================================================================================
-echo Witam w installatorze ZychuSMP4 sklejonego tasma klejem i dwunastoma butelkami kaucyjnymi
+echo Witam w installatorze ZychuSMP4.5 sklejonego tasma klejem i dwunastoma butelkami kaucyjnymi
 echo 1 - Install [ Instaluje paczke ZSMP4 na komputerze ] 
 echo 2 - Update [ Pobiera aktualizacje modow ]
 echo 3 - Uninstall [ Odinstalowywuje paczke i resetuje ustawienia ]
@@ -46,7 +46,7 @@ cd ..
 "git/cmd/git.exe" init
 "git/cmd/git.exe" config --global core.safecrlf false
 "git/cmd/git.exe" config --local core.safecrlf false
-"git/cmd/git.exe" clone https://github.com/Zzychu/ZSMP4.git
+"git/cmd/git.exe" clone -b 4.5 https://github.com/Zzychu/ZSMP4.git
 xcopy /S /Y /F %OriginalDirectory%\InstallFiles\ZSMP4 ./
 
 
@@ -55,7 +55,7 @@ cd %APPDATA%
 cd .minecraft
 copy launcher_profiles.json launcher_profiles2.json
 cd %OriginalDirectory%/InstallFiles
-"java/bin/java.exe" -jar neoforge-21.1.233-installer.jar --installClient
+"java/bin/java.exe" -jar neoforge-21.1.248-installer.jar --installClient
 cd %OriginalDirectory%/InstallFiles
 Powershell.exe -executionpolicy remotesigned -File ./VersionArgumentsChange.ps1
 cd %APPDATA%/.minecraft
@@ -72,18 +72,19 @@ xcopy /S /Y /F %OriginalDirectory%\InstallFiles\java java\
 xcopy /S /Y /F %OriginalDirectory%\InstallFiles\config config\
 xcopy /S /Y /F %OriginalDirectory%\InstallFiles\options.txt ./
 xcopy /S /Y /F %OriginalDirectory%\InstallFiles\servers.dat ./
-cls
-echo ========================================================================================================================
-echo Przygotowalem wczesniej wygenerowane chunki do moda voxy
-echo Pozwalaja one widzec dalej niz pozwala serwer i ogolnie powiekszaja dystans widzenia.
-echo Pobranie takich chunkow wymaga ~5GB wiec sa one opcjonalne.
-echo ========================================================================================================================
-set VoxyOption="T"
-set /p VoxyOption="Czy chcesz pobrac wygenerowane wczesniej chunki? [ 'T' - TAK | 'N' - NIE ]: "
-if /i "%VoxyOption%"=="N" goto end
-curl --ssl-no-revoke -L http://zychuhost.ddns.net/.voxy.zip --output voxy.zip
-tar -xf voxy.zip
-del voxy.zip
+@REM VOXY DOWNLOAD QUESTION
+@REM cls
+@REM echo ========================================================================================================================
+@REM echo Przygotowalem wczesniej wygenerowane chunki do moda voxy
+@REM echo Pozwalaja one widzec dalej niz pozwala serwer i ogolnie powiekszaja dystans widzenia.
+@REM echo Pobranie takich chunkow wymaga ~5GB wiec sa one opcjonalne.
+@REM echo ========================================================================================================================
+@REM set VoxyOption="T"
+@REM set /p VoxyOption="Czy chcesz pobrac wygenerowane wczesniej chunki? [ 'T' - TAK | 'N' - NIE ]: "
+@REM if /i "%VoxyOption%"=="N" goto end
+@REM curl --ssl-no-revoke -L http://zychuhost.ddns.net/.voxy.zip --output voxy.zip
+@REM tar -xf voxy.zip
+@REM del voxy.zip
 goto end
 
 :Update
@@ -98,7 +99,7 @@ cd git
 curl --ssl-no-revoke -L https://github.com/git-for-windows/git/releases/download/v2.54.0.windows.1/MinGit-2.54.0-64-bit.zip --output git.zip
 tar -xf git.zip
 cd ..
-"git/cmd/git.exe" clone https://github.com/Zzychu/ZSMP4.git
+"git/cmd/git.exe" clone -b 4.5 https://github.com/Zzychu/ZSMP4.git
 xcopy /S /Y /F %OriginalDirectory%\UpdateFiles\ZSMP4 ./
 cd %appdata%/.minecraft/ZSMP4
 rmdir /S /Q mods
