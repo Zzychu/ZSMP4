@@ -19,6 +19,7 @@ set /p opcja="Wybierz numer: "
 if /i "%opcja%"=="1" goto Install
 if /i "%opcja%"=="2" goto Update
 if /i "%opcja%"=="3" goto Uninstall
+if /i "%opcja%"=="4" goto end
 
 :Install
 echo Wybrano install
