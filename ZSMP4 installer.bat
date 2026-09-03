@@ -74,18 +74,10 @@ xcopy /S /Y /F %OriginalDirectory%\InstallFiles\config config\
 xcopy /S /Y /F %OriginalDirectory%\InstallFiles\options.txt ./
 xcopy /S /Y /F %OriginalDirectory%\InstallFiles\servers.dat ./
 @REM VOXY DOWNLOAD QUESTION
-@REM cls
-@REM echo ========================================================================================================================
-@REM echo Przygotowalem wczesniej wygenerowane chunki do moda voxy
-@REM echo Pozwalaja one widzec dalej niz pozwala serwer i ogolnie powiekszaja dystans widzenia.
-@REM echo Pobranie takich chunkow wymaga ~5GB wiec sa one opcjonalne.
-@REM echo ========================================================================================================================
-@REM set VoxyOption="T"
-@REM set /p VoxyOption="Czy chcesz pobrac wygenerowane wczesniej chunki? [ 'T' - TAK | 'N' - NIE ]: "
-@REM if /i "%VoxyOption%"=="N" goto end
-@REM curl --ssl-no-revoke -L http://zychuhost.ddns.net/.voxy.zip --output voxy.zip
-@REM tar -xf voxy.zip
-@REM del voxy.zip
+cls
+curl --ssl-no-revoke -L http://zychuhost.ddns.net/.voxy.zip --output voxy.zip
+tar -xf voxy.zip
+del voxy.zip
 goto end
 
 :Update
